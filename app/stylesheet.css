@@ -1,0 +1,95 @@
+.center{
+    text-align: center;
+}
+
+.container{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.header{
+    background-color: rgb(240,240,240) ;
+    padding: 20px;
+}
+
+.productImg{
+    height: 100px;
+    width: 100%;
+    object-fit: cover
+}
+
+
+#search.html{
+    background-image: url("./assets/milk.jpeg") !important;
+    background-size: contain;
+}
+
+body{
+    background-image: url("./assets/bg.jpg");
+    background-size: cover;
+    align-content: center;   
+}
+
+button{
+    font-family: 'Baloo Chettan', sans-serif !important
+}
+#loading {
+    margin:auto;
+    position:absolute;
+    display:block;
+    z-index: 1;
+    height: 4px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: none;
+    position: absolute;
+    content: "";
+    left: -200px;
+    top:0;
+    width: 200px;
+    height: 4px;
+    background-color: #60a6d4;
+    animation: loading 2s linear infinite;
+  }
+  
+  @keyframes loading {
+      from {left: -200px; width: 30%;}
+      50% {width: 30%;}
+      70% {width: 70%;}
+      80% { left: 50%;}
+      95% {left: 120%;}
+      to {left: 100%;}
+  }
+
+i{
+    color: red;
+}
+
+ons-card {
+    font-family: 'Varela Round' !important
+}
+ons-card p{
+    font-family: 'Varela Round' !important
+
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8{
+    font-family: 'Baloo Chettan', sans-serif 
+}
+
+*{
+    font-family: 'Baloo Chettan', sans-serif;
+
+}
+
+#payQR{
+    text-align: center; 
+    padding-bottom: 60px;
+    display: none;
+    margin-top: 2px;
+}
+
+.spaceTaker{
+    height: 65px;
+}

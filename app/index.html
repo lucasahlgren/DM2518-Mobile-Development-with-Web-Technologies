@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="stylesheet.css" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Share+Tech|Varela+Round" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>
+    ShAPPing
+  </title>
+  <script>
+    // Redirect console if running from Evothings Workbench.
+    if (window.hyper) { console.log = hyper.log }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase-auth.js"></script>
+  <!--<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase-database.js"></script>-->
+  <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+  <script>
+  </script>
+</head>
+
+<body style="overflow-y: scroll;">
+  <div class="container mx-auto">
+
+    <!-- Log-in-->
+    <div class="container" id="logIn.html">
+      <h5 class="center header">shAPPing</h5>
+      <br>
+      <div id="login" class="col-10 mx-auto">
+        <form class="form-signin">
+          <h2 class="form-signin-heading text-white text-center">Please sign in</h2>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+          <br>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+          <br>
+          <button id="loginBtn" class="btn btn-lg btn-danger btn-block" type="submit">Sign in</button>
+        </form>
+        <br>
+        <p class="text-center text-white">Not a user yet? Create an account.</p>
+        <button class="btn btn-lg btn-danger btn-block" onclick="signUpPage()">Sign up</button>
+        <br>
+        <p class="text-center alert alert-danger" id="loginInfo"></p>
+      </div>
+    </div>
+
+    <div class="container" id="signUp.html">
+      <h5 class="center header text-center">shAPPing</h5>
+      <br>
+      <div id="signup" class="col-10 mx-auto">
+        <form class="form-signup">
+          <h2 class="form-signin-heading text-white text-center">Please sign up</h2>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input id="inputEmailSignUp" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+          <br>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input id="inputPasswordSignUp" class="form-control" placeholder="Password" required="" type="password">
+        </form>
+        <br>
+        <button class="btn btn-lg btn-danger btn-block" onclick="signUpUser()">Sign up</button>
+        <br>
+        <button class="btn btn-lg btn-danger btn-block" onclick="loginPage()">Back</button>
+        <br>
+        <p class="text-center alert alert-danger" id="signUpInfo"></p>
+      </div>
+    </div>
+
+
+    <div id="navBar.html">
+      <!-- Navigator -->
+      <div class="navbar fixed-bottom navbar-light bg-light">
+          <div id="loading">
+            </div>
+        <a class="nav-item nav-link" href="#" onclick="scanPage()">
+          <i class="material-icons">speaker_phone</i>
+        </a>
+        <a class="nav-item nav-link" href="#" onclick="cartPage()">
+          <i class="material-icons">shopping_cart</i>
+        </a>
+        <a class="nav-item nav-link" href="#" onclick="searchPage()">
+          <i class="material-icons">search</i>
+        </a>
+        <a class="nav-item nav-link" href="#" onclick="payPage()">
+          <i class="material-icons">payment</i>
+        </a>
+        <a id="logoutBtn" class="nav-item nav-link" href="#">
+          <i class="material-icons">power_settings_new</i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scan product -->
+    <div id="scanProduct.html">
+      <h5 class="center header"> Scan a product</h5>
+      <div id="scanProduct" class="col-11 mx-auto">
+      </div>
+    </div>
+
+    <!-- Shopping cart -->
+    <div id="shoppingCart.html">
+      <h5 class="center header">Shopping cart</h5>
+      <div id="shoppingCart">
+        
+      </div>
+      <!--Space Taker (Som en Star Destroyer ungefär fast lite mer simpel)-->
+      <div class="spaceTaker"></div>
+
+    </div>
+
+    <!-- Search -->
+    <div id="search.html">
+      <h5 class="center header">Search a product</h5>
+      <input class="form-control col-10 mx-auto" type="search" id="myInput" placeholder="Search" style="margin: auto; display: block;"
+        onchange="model.setSearchFilter(this.value);"></input>
+      <div id="search">
+      </div>
+      <!--Space Taker (Som en Star Destroyer ungefär fast lite mer simpel)-->
+      <div class="spaceTaker"></div>
+    </div>
+
+    <!-- Checkout -->
+    <div id="pay.html">
+      <div class="container">
+        <h5 class="center header">Checkout</h5>
+        <div id="checkoutContent" class="col-10 mx-auto">
+          <h5 class="text-center text-white">Products</h5>
+          <ons-card id="checkoutProducts" class="col-12 mx-auto">
+            <div class="row p-0 m-0">
+              <p class="col-8 m-0">Product</p>
+              <p class="col-4 m-0">Price</p>
+            </div>
+            <hr>
+            <div id="productsContent">
+            </div>
+          </ons-card>
+          <hr>
+          <h5 class="text-center text-white">User info</h5>
+          <div id="checkoutUser">
+          </div>
+          <button class="btn btn-lg btn-danger btn-block" id="checkoutPay" onclick="payMessage()">Pay</button>
+          <div id="payQR">
+            <a rel='nofollow' href='http://www.qrcode-generator.de' border='0' style='cursor:default'><img src='https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DkxopViU98Xo&chs=180x180&choe=UTF-8&chld=L|2' alt=''></a>
+          </div>
+          <!--Space Taker (Som en Star Destroyer ungefär fast lite mer simpel)-->
+          <div class="spaceTaker"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="productInfo.html">
+      <h5 class="center header">Product details</h5>
+      <div class="row mx-auto">
+        <i class="col-2 material-icons" style="color: white" onclick="searchPage()">arrow_back_ios</i>
+        <h5 class="col-8 center text-white">Product info</h5>
+      </div>
+
+      <div id="productInfo" class="col-11 mx-auto">
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="cordova.js"></script>
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="js/model/shoppingModel.js"></script>
+
+  <script src="js/other/search.js"></script>
+  <script src="js/other/shoppingCart.js"></script>
+  <script src="js/other/pay.js"></script>
+  <script src="js/other/pressInfo.js"></script>
+  <script src="js/other/beaconApp.js"></script>
+  <!--<script src="js/other/beaconApp.js"></script>-->
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
